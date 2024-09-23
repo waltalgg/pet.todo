@@ -1,4 +1,6 @@
-.text-decoration-none:hover {
-    important: color: red;
+.text-decoration-none:hover
+{
+    color: red;
     transition: color 0.2s ease;
 }
+
