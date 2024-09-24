@@ -1,12 +1,13 @@
 <?php
-
+require_once($_SERVER['DOCUMENT_ROOT'].'\php\database\connect.php');
 class WorkWithDatabase
 {
-    private static function SelectInDatabase($database, $table, $sql, $flag = '')
+    private static function SelectInDatabase($dbname, $table, $sql, $flag = '')
     {
+		$connect = Connect::ConnectReturn($dbname);
         // TODO: Логика работы с БД, запрос SELECT
     }
-    public static function AccessToDatabase($database = '', $table = '', $request = '') // TODO: По дефолту брать из конфига
+    public static function AccessToDatabase($dbname = '', $table = '', $request = '') // TODO: По дефолту брать из конфига
     {
         $result = '';
         $sql = ''; // TODO: Организация sql запросов через отедльную функцию
@@ -14,7 +15,7 @@ class WorkWithDatabase
         switch ($request)
         {
             case 'select':
-                $result = self::SelectInDatabase($database, $table, $sql, $flag);
+                $result = self::SelectInDatabase($dbname, $table, $sql, $flag);
                 break;
             case 'update':
                 break;

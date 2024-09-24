@@ -1,9 +1,9 @@
 <html>
 <head>
     <?php
-    require_once($_SERVER['DOCUMENT_ROOT'].'/php/debugger/debugger.php');
-    require_once($_SERVER['DOCUMENT_ROOT'].'/php/pattern/block_pattern.php');
-    require_once($_SERVER['DOCUMENT_ROOT'].'/php/database/work_with_database.php');  // TODO: Сделать разделение путей на бд, паттерны и основной код index'а
+    require_once($_SERVER['DOCUMENT_ROOT'].'\php/debugger\debugger.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'\php/pattern\block_pattern.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'\php/database\work_with_database.php'); // TODO: Сделать namespaces
 
     Debugger::WatchError(1);
     ?>
@@ -13,7 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href= "../css/style.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Index</title>
+    <title>ToDoList</title>
 </head>
 
 <header>

@@ -1,7 +1,7 @@
 <?php
 class Authorization
 {
-	private static function FormHandler()
+	private static function FormHandlerAuthorization()
 	{
 
 	}

@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/php/config/configDatabase');
+require_once($_SERVER['DOCUMENT_ROOT'].'\php\config\configDatabase.php');
 class Connect
 {
 	private static function TryToConnect($dbname = '')
@@ -26,8 +26,8 @@ class Connect
 			die();
 		}
 	}
-	public static function Connect($dbname)
+	public static function ConnectReturn($dbname)
 	{
-		self::TryToConnect($dbname);
+		return self::TryToConnect($dbname);
 	}
 }
