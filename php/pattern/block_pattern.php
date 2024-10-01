@@ -1,12 +1,17 @@
 <?php
 
+require_once($_SERVER['DOCUMENT_ROOT'].'\php\pattern\helpmate_block_pattern.php');
 class BlockPattern
 {
+
+	private static function InitHelpmate($request)
+	{
+		return HelpmateBlockPattern::ReturnHelpmate($request);
+	}
+
 	// Секция Header
 	private static function HeaderPattern($flag)
 	{
-		$blocks = []; // TODO: Ддостаются из БД или конфига
-
 		$html = ' 
 			<div class="px-3 py-2 text-bg-dark border-bottom">
 			  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -15,10 +20,7 @@ class BlockPattern
 		
 				<ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">';
 
-		if ($flag === true)
-		{
-			$html .= self::HeaderBlockSections();
-		}
+		if ($flag === true) $html .= self::HeaderBlockSections();
 
 		$html .= '
 				</ul>
@@ -30,21 +32,22 @@ class BlockPattern
 	}
     private static function HeaderBlockSections()
     {
-	   $html = '';
-	   $blocks = ['Главная', 'Мой профиль', 'Мои заметки']; // дефолтные значения
-
-	   for($i = 0; $i < count($blocks); $i++)
-	   {
+	   	$html = '';
+	   	$blocks = ['Главная', 'Мой профиль', 'Мои заметки']; // дефолтные значения
+		for($i = 0; $i < count($blocks); $i++)
+	   	{
 		   if(isset($blocks[$i]) && $blocks[$i] !== '') // избавляемся от вариантов пустых заголовков внутри блока
 		   {
 			   $html .= '
 					<li>
-						<a href="#" class="text-decoration-none nav-link text-white">
+						<a href="';
+			   $html .= HelpmateBlockPattern::ReturnHelpmate('ReturnLink', $blocks[$i]);
+			   $html .= '" class="text-decoration-none nav-link text-white">
 						   <p class = "text-decoration-none m-0">' . $blocks[$i] . '</p>
 						</a>
 					</li>';
 	   		}
-	   }
+	   	}
 	   return $html;
 
     }
@@ -108,9 +111,9 @@ class BlockPattern
     {
         $result = '';
 		$iteration = 3; // Количество выводимых блоков. TODO: Затем можно сделать вывод через какой-нибудь интерфейс
-        switch ($pattern)
+        switch (strtolower($pattern))
         {
-            case 'indexInformationBlock':
+            case 'indexinformationblock':
                 $result .= '<div class="row">';
                 for ($i = 0; $i < $iteration; $i++)
                 {
@@ -124,8 +127,9 @@ class BlockPattern
             case 'header':
 				$result .= self::HeaderPattern(true); // true - прошли авторизацию, false - не прошли TODO: Написать логику после того, как сделаю регистрацию
 				break;
-			case 'faceIndex':
+			case 'faceindex':
 				$result .= self::FaceIndex();
+				break;
         }
         return $result;
     }

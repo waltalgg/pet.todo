@@ -1,9 +1,9 @@
 <html>
 <head>
     <?php
-    require_once($_SERVER['DOCUMENT_ROOT'].'\php/debugger\debugger.php');
-    require_once($_SERVER['DOCUMENT_ROOT'].'\php/pattern\block_pattern.php');
-    require_once($_SERVER['DOCUMENT_ROOT'].'\php/database\work_with_database.php'); // TODO: Сделать namespaces
+    require_once($_SERVER['DOCUMENT_ROOT'].'\php\debugger\debugger.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'\php\pattern\block_pattern.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'\php\database\work_with_database.php'); // TODO: Сделать namespaces
 
     Debugger::WatchError(1);
     ?>
