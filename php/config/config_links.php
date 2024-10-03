@@ -9,7 +9,7 @@ class ConfigLinks
 	}
 	public function ReturnConfigLink()
 	{
-		$prefix = 'pages\..\\'; // TODO: Разобраться с ссылками
+		$prefix = 'pages/../'; // TODO: Разобраться с ссылками
 		switch(mb_strtolower($this->pageName, 'UTF-8'))
 		{
 			case 'главная':

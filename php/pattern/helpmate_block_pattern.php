@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'\php\config\config_links.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/php/config/config_links.php');
 class HelpmateBlockPattern
 {
 	private static function ReturnLink($namePage)
@@ -9,17 +9,22 @@ class HelpmateBlockPattern
 		return $config->ReturnConfigLink();
 	}
 
-	public static function ReturnHelpmate($request, $value)
+	private static function isAuthenticated()
+	{
+		return isset($_SESSION['AUTH_TOKEN']) && $_SESSION['AUTH_TOKEN'] === true;
+	}
+
+	public static function ReturnHelpmate($request, $value = '')
 	{
 
 		switch(strtolower($request))
 		{
 			case 'returnlink':
-				return self::ReturnLink($value);
-
-			case '':
+				if(isset($value)) return self::ReturnLink($value);
 				break;
 
+			case 'isauthtoken':
+				return self::isAuthenticated();
 		}
 	}
 }

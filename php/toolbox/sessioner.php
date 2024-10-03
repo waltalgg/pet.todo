@@ -25,8 +25,9 @@ class Sessioner
 		switch (strtolower($initValue))
 		{
 			case 'token_auth':
-				$_SESSION['TOKEN_AUTH'] = true;
-				break;
+				return $_SESSION['TOKEN_AUTH'] = true;
+
+
 
 		}
 	}
@@ -43,7 +44,7 @@ class Sessioner
 				break;
 
 			case 'init':
-				self::initSessionValue($initValue);
+				return self::initSessionValue($initValue);
 		}
 	}
 }

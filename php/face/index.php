@@ -1,36 +1,29 @@
-<html>
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'].'/php/toolbox/caller.php');
+Caller::Call(); // подключение всех зависимостей
+?>
+
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-    <?php
-    require_once($_SERVER['DOCUMENT_ROOT'].'\php\debugger\debugger.php');
-    require_once($_SERVER['DOCUMENT_ROOT'].'\php\pattern\block_pattern.php');
-    require_once($_SERVER['DOCUMENT_ROOT'].'\php\database\work_with_database.php'); // TODO: Сделать namespaces
-    require_once($_SERVER['DOCUMENT_ROOT'].'\php\debugger\sessioner.php');
-    
-    Sessioner::SessionWorker('start');
-    Debugger::WatchError(1);
-    ?>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href= "../css/style.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>ToDoList</title>
+	<?= BlockPattern::ReturnPattern('meta'); ?>
 </head>
+<body>
 
 <header>
-        <?= BlockPattern::ReturnPattern('header') ?>
+	<?= BlockPattern::ReturnPattern('header'); ?>
 </header>
 
-<body>
-    <div class="container">
-        <?= BlockPattern::ReturnPattern('faceIndex'); ?>
-        <?= BlockPattern::ReturnPattern('indexInformationBlock'); ?>
-    </div>
-
-<footer>
-
-</footer>
+<div class="container">
+	<?= BlockPattern::ReturnPattern('faceIndex'); ?>
+	<?= BlockPattern::ReturnPattern('indexInformationBlock'); ?>
+</div>
 
 </body>
+
+<footer>
+	<?php // TODO: Написать footer ?>
+</footer>
+
 </html>

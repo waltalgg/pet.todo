@@ -1,44 +1,32 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'\php\pattern\helpmate_block_pattern.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/php/pattern/helpmate_block_pattern.php');
 class BlockPattern
 {
-
-	private static function InitHelpmate($request)
-	{
-		return HelpmateBlockPattern::ReturnHelpmate($request);
-	}
-
 	// Секция Header
-	private static function HeaderPattern($flag, $nowPage)
+	private static function HeaderPattern()
 	{
-
 		$html = ' 
 			<div class="px-3 py-2 text-bg-dark border-bottom">
 			  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-				<a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-				</a>
-		
+				<a href="index.php" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">Logo</a>
 				<ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">';
 
-		if ($flag === true) $html .= self::HeaderBlockSections();
+		if (HelpmateBlockPattern::ReturnHelpmate('isAuthToken')) $html .= self::HeaderBlockSections(); // Если пользователь имеет токен авторизации
 
 		$html .= '
 				</ul>
 			  </div>
 			</div>';
 
-		$html .= self::HeaderBlockAuthorization($flag);
+		$html .= self::HeaderBlockAuthorization();
 		return $html;
 	}
     private static function HeaderBlockSections()
     {
 	   	$html = '';
-	    if(($_SESSION['AUTH_TOKEN']))
-		{
+	    $blocks = ['Главная', 'Мой профиль', 'Мои заметки']; // дефолтные значения
 
-		}
-	   	$blocks = ['Главная', 'Мой профиль', 'Мои заметки']; // дефолтные значения
 		for($i = 0; $i < count($blocks); $i++)
 	   	{
 		   if(isset($blocks[$i]) && $blocks[$i] !== '') // избавляемся от вариантов пустых заголовков внутри блока
@@ -56,36 +44,38 @@ class BlockPattern
 	   return $html;
 
     }
-	private static function HeaderBlockAuthorization($flag)
+	private static function HeaderBlockAuthorization()
 	{
 		$blockAboutAuth = '
-						<button type="button" class="btn btn-light text-dark me-2">Войти</button>
-						<button type="button" class="btn btn-primary">Зарегистрироваться</button>';
+						<a href = "page_login.php"class="btn btn-light text-dark me-2">Войти</a>
+						<a href="page_registration.php" class="btn btn-primary">Зарегистрироваться</a>';
 
-		$blockBeforeAuth = '<button type="button" class="btn btn-light text-danger me-2">Выйти</button>';
+		$blockBeforeAuth = '<a href="index.php" type="button" class="btn btn-light text-danger me-2">Выйти</a>'; // TODO: Поставить destroy сессию
 
 		$html = ' 
 			<div class="px-3 py-2 border-bottom mb-3">
 				<div class="d-flex flex-wrap justify-content-end">
 					<div class="text-end">';
-		if($flag === false)
+
+		// TODO: В будущем сделать через cookie
+		if(HelpmateBlockPattern::ReturnHelpmate('isAuthToken'))  // Если токен авторизации существует
 		{
-			$html .= $blockAboutAuth; // TODO: Проверка на авторизацию через сессию, в дальнейшем через cookie для вывода нужного блока
+			$html .= $blockBeforeAuth;
 		}
 		else
 		{
-			$html .= $blockBeforeAuth;
+			$html .= $blockAboutAuth;
 		}
 
 		$html .= '
 					</div>
 				</div>
 			</div>';
+
 		return $html;
-
 	}
-
 	// Конец секции Header
+
 	private static function FaceIndex()
 	{
 		$html = '
@@ -114,7 +104,7 @@ class BlockPattern
 
 	private static function BuilderIndexBlocks()
 	{
-		$iteration = 3; // Количество выводимых блоков. TODO: Затем можно сделать вывод через какой-нибудь интерфейс
+		$iteration = 3; // Количество выводимых блоков
 		$result = '<div class="row">';
 		for ($i = 0; $i < $iteration; $i++)
 		{
@@ -128,8 +118,42 @@ class BlockPattern
 
 	private static function BuilderPageRegistration() // Билдер страницы регистрации
 	{
-		self::HeaderPattern();
+		 return '
+	<div class="form-container">
+		<h2 class="text-center text-danger mb-4">Регистрация</h2>
+		<form method="POST" id="registrationForm" action="../auth/new_user_registration.php">
+			<div class="mb-3">
+				<label for="username" class="form-label">Имя пользователя</label>
+				<input type="text" class="form-control" id="username" name="username" required>
+			</div>
+			<div class="mb-3">
+				<label for="email" class="form-label">Email</label>
+				<input type="email" class="form-control" id="email" name="email" required>
+			</div>
+			<div class="mb-3">
+				<label for="password" class="form-label">Пароль</label>
+				<input type="password" class="form-control" id="password" name="password" required>
+			</div>
+			<button type="submit" class="btn btn-custom w-100 text-warning border-top border-bottom mt-3"><h4>Зарегистрироваться</h4></button>
+		</form>
+		<div class="text-center mt-3">
+			<a href="page_login.php" class="text-primary">Уже есть аккаунт? Войти</a>
+		</div>
+		<div class="text-center mt-3">
+			<a href="index.php" class="text-info">Назад на главную</a>
+		</div>
+	</div>
+		';
+	}
 
+	private static function DefaultMetaInfo()
+	{
+		return '
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+			<meta http-equiv="X-UA-Compatible" content="ie=edge">
+			<link href= "../css/style.css" rel="stylesheet">
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">';
 	}
 
     public static function ReturnPattern($pattern)
@@ -137,12 +161,16 @@ class BlockPattern
         $result = '';
         switch (strtolower($pattern))
         {
+			case 'meta':
+				$result .= self::DefaultMetaInfo();
+				break;
+
             case 'indexinformationblock':
 				$result .= self::BuilderIndexBlocks();
 				break;
 
             case 'header':
-				$result .= self::HeaderPattern(false); // true - прошли авторизацию, false - не прошли TODO: Написать логику после того, как сделаю регистрацию
+				$result .= self::HeaderPattern();
 				break;
 
 			case 'faceindex':
