@@ -4,7 +4,9 @@
     require_once($_SERVER['DOCUMENT_ROOT'].'\php\debugger\debugger.php');
     require_once($_SERVER['DOCUMENT_ROOT'].'\php\pattern\block_pattern.php');
     require_once($_SERVER['DOCUMENT_ROOT'].'\php\database\work_with_database.php'); // TODO: Сделать namespaces
-
+    require_once($_SERVER['DOCUMENT_ROOT'].'\php\debugger\sessioner.php');
+    
+    Sessioner::SessionWorker('start');
     Debugger::WatchError(1);
     ?>
     <meta charset="UTF-8">
@@ -25,6 +27,10 @@
         <?= BlockPattern::ReturnPattern('faceIndex'); ?>
         <?= BlockPattern::ReturnPattern('indexInformationBlock'); ?>
     </div>
+
+<footer>
+
+</footer>
 
 </body>
 </html>

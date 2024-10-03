@@ -10,8 +10,9 @@ class BlockPattern
 	}
 
 	// Секция Header
-	private static function HeaderPattern($flag)
+	private static function HeaderPattern($flag, $nowPage)
 	{
+
 		$html = ' 
 			<div class="px-3 py-2 text-bg-dark border-bottom">
 			  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -33,6 +34,10 @@ class BlockPattern
     private static function HeaderBlockSections()
     {
 	   	$html = '';
+	    if(($_SESSION['AUTH_TOKEN']))
+		{
+
+		}
 	   	$blocks = ['Главная', 'Мой профиль', 'Мои заметки']; // дефолтные значения
 		for($i = 0; $i < count($blocks); $i++)
 	   	{
@@ -107,28 +112,45 @@ class BlockPattern
         ';
 	}
 
+	private static function BuilderIndexBlocks()
+	{
+		$iteration = 3; // Количество выводимых блоков. TODO: Затем можно сделать вывод через какой-нибудь интерфейс
+		$result = '<div class="row">';
+		for ($i = 0; $i < $iteration; $i++)
+		{
+			$result .= '<div class="col-md-4">';
+			$result .= self::IndexInformationBlock();
+			$result .= '</div>';
+		}
+		$result .= '</div>';
+		return $result;
+	}
+
+	private static function BuilderPageRegistration() // Билдер страницы регистрации
+	{
+		self::HeaderPattern();
+
+	}
+
     public static function ReturnPattern($pattern)
     {
         $result = '';
-		$iteration = 3; // Количество выводимых блоков. TODO: Затем можно сделать вывод через какой-нибудь интерфейс
         switch (strtolower($pattern))
         {
             case 'indexinformationblock':
-                $result .= '<div class="row">';
-                for ($i = 0; $i < $iteration; $i++)
-                {
-                    $result .= '<div class="col-md-4">';
-                    $result .= self::IndexInformationBlock();
-                    $result .= '</div>';
-                }
-                $result .= '</div>';
-                break;
+				$result .= self::BuilderIndexBlocks();
+				break;
 
             case 'header':
-				$result .= self::HeaderPattern(true); // true - прошли авторизацию, false - не прошли TODO: Написать логику после того, как сделаю регистрацию
+				$result .= self::HeaderPattern(false); // true - прошли авторизацию, false - не прошли TODO: Написать логику после того, как сделаю регистрацию
 				break;
+
 			case 'faceindex':
 				$result .= self::FaceIndex();
+				break;
+
+			case 'pageregistration':
+				$result .= self::BuilderPageRegistration();
 				break;
         }
         return $result;
