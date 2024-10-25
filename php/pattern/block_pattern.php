@@ -128,15 +128,15 @@ class BlockPattern
 		<form method="POST" id="registrationForm">
 			<div class="mb-3">
 				<label for="username" class="form-label">Имя пользователя</label>
-				<input type="text" class="form-control" id="username" name="username" required>
+				<input type="text" class="form-control" id="login_registration" name="username" required>
 			</div>
 			<div class="mb-3">
 				<label for="email" class="form-label">Email</label>
-				<input type="email" class="form-control" id="email" name="email" required>
+				<input type="email" class="form-control" id="email_registration" name="email" required>
 			</div>
 			<div class="mb-3">
 				<label for="password" class="form-label">Пароль</label>
-				<input type="password" class="form-control" id="password" name="password" required>
+				<input type="password" class="form-control" id="password_registration" name="password" required>
 			</div>
 			<button type="submit" class="btn btn-custom w-100 text-warning border-top border-bottom mt-3"><h4>Зарегистрироваться</h4></button>
 		</form>
