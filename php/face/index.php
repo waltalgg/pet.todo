@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/php/toolbox/caller.php');
+require_once $_SERVER['DOCUMENT_ROOT'].'/php/toolbox/caller.php';
 Caller::Call(); // подключение всех зависимостей
 ?>
 
@@ -7,17 +7,17 @@ Caller::Call(); // подключение всех зависимостей
 <html lang="ru">
 <head>
     <title>ToDoList</title>
-	<?= BlockPattern::ReturnPattern('meta'); ?>
+	<?= BlockPattern::Builder('meta'); ?>
 </head>
 <body>
 
 <header>
-	<?= BlockPattern::ReturnPattern('header'); ?>
+	<?= BlockPattern::Builder('header'); ?>
 </header>
 
 <div class="container">
-	<?= BlockPattern::ReturnPattern('faceIndex'); ?>
-	<?= BlockPattern::ReturnPattern('indexInformationBlock'); ?>
+	<?= BlockPattern::Builder('faceIndex'); ?>
+	<?= BlockPattern::Builder('indexInformationBlock'); ?>
 </div>
 
 </body>

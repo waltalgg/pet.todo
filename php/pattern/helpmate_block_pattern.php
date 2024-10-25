@@ -16,7 +16,6 @@ class HelpmateBlockPattern
 
 	public static function ReturnHelpmate($request, $value = '')
 	{
-
 		switch(strtolower($request))
 		{
 			case 'returnlink':

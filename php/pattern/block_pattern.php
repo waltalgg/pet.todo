@@ -1,10 +1,12 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/php/pattern/helpmate_block_pattern.php');
+require_once $_SERVER['DOCUMENT_ROOT'].'/php/pattern/helpmate_block_pattern.php';
 class BlockPattern
 {
-	// Секция Header
-	private static function HeaderPattern()
+	/*
+	 * Секция Header
+	 */
+	private static function Header()
 	{
 		$html = ' 
 			<div class="px-3 py-2 text-bg-dark border-bottom">
@@ -74,7 +76,9 @@ class BlockPattern
 
 		return $html;
 	}
-	// Конец секции Header
+	/*
+	 * Конец секции Header
+	 */
 
 	private static function FaceIndex()
 	{
@@ -102,7 +106,7 @@ class BlockPattern
         ';
 	}
 
-	private static function BuilderIndexBlocks()
+	protected static function PatternIndexBlocks()
 	{
 		$iteration = 3; // Количество выводимых блоков
 		$result = '<div class="row">';
@@ -116,12 +120,12 @@ class BlockPattern
 		return $result;
 	}
 
-	private static function BuilderPageRegistration() // Билдер страницы регистрации
+	private static function PatternPageRegistration() // Билдер страницы регистрации
 	{
-		 return '
+		 $result = '
 	<div class="form-container">
 		<h2 class="text-center text-danger mb-4">Регистрация</h2>
-		<form method="POST" id="registrationForm" action="../auth/new_user_registration.php">
+		<form method="POST" id="registrationForm">
 			<div class="mb-3">
 				<label for="username" class="form-label">Имя пользователя</label>
 				<input type="text" class="form-control" id="username" name="username" required>
@@ -144,19 +148,21 @@ class BlockPattern
 		</div>
 	</div>
 		';
+		 $result .= '<script src="../../js/registration_ajax.js"></script>';
+		 return $result;
 	}
 
-	private static function DefaultMetaInfo()
+	protected static function DefaultMetaInfo()
 	{
 		return '
 			<meta charset="UTF-8">
 			<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 			<meta http-equiv="X-UA-Compatible" content="ie=edge">
-			<link href= "../css/style.css" rel="stylesheet">
+			<link href= "../../css/style.css" rel="stylesheet">
 			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">';
 	}
 
-    public static function ReturnPattern($pattern)
+    public static function Builder($pattern)
     {
         $result = '';
         switch (strtolower($pattern))
@@ -166,11 +172,11 @@ class BlockPattern
 				break;
 
             case 'indexinformationblock':
-				$result .= self::BuilderIndexBlocks();
+				$result .= self::PatternIndexBlocks();
 				break;
 
             case 'header':
-				$result .= self::HeaderPattern();
+				$result .= self::Header();
 				break;
 
 			case 'faceindex':
@@ -178,7 +184,7 @@ class BlockPattern
 				break;
 
 			case 'pageregistration':
-				$result .= self::BuilderPageRegistration();
+				$result .= self::PatternPageRegistration();
 				break;
         }
         return $result;
